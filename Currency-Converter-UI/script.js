@@ -13,7 +13,7 @@ form.addEventListener('submit', async (e) => {
     resultBox.innerHTML = '⏳ Przeliczanie...';
 
     try {
-        const response = await fetch('http://localhost:3000/convert', {
+        const response = await fetch('https://currency-converter-api-xp88.onrender.com/convert', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
