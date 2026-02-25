@@ -1,11 +1,4 @@
-// harcoded rates
-const exchangeRates = {
-    USD: 4.02,
-    EUR: 4.35,
-    GBP: 5.08
-};
-
-const validateConversionData = (req, res, next) => {
+const validateConversionData = async (req, res, next) => {
     const { from, amount } = req.body;
 
     if (!from || amount === undefined) {
@@ -16,15 +9,26 @@ const validateConversionData = (req, res, next) => {
         return res.status(400).json({ error: "Validation Error: The amount must be greater than zero!" });
     }
 
-    const rate = exchangeRates[from.toUpperCase()];
+    try{
+        const currencyCode = from.toLowerCase();
+        const nbpUrl = `http://api.nbp.pl/api/exchangerates/rates/a/${currencyCode}/?format=json`;
 
-    if (!rate) {
-        return res.status(404).json({ error: "We do not support this currency." });
+        const response = await fetch(nbpUrl);
+
+        if (!response.ok) {
+            next(error);
+        }
+        const data = await response.json();
+
+        const currentRate = data.rates[0].mid;
+
+        req.validRate = currentRate;
+        next();
+
+    }catch(error){
+        next(error);
     }
 
-    req.validRate = rate; // attach rate to req object
-
-    next();
-};
+    }
 
 module.exports = validateConversionData;
