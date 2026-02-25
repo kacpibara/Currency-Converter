@@ -5,18 +5,18 @@ const router = express.Router();
 const validateConversionData = require('../middlewares/validateConversion');
 
 router.post('/', validateConversionData, (req, res) => {
-    const { from, amount } = req.body;
+    const { from, to, amount } = req.body;
+    const { rateFrom, rateTo } = req.validRates;
 
-    const rate = req.validRate;
-
-    const result = (amount * rate).toFixed(2);
+    const amountInPLN = amount * rateFrom;
+    const finalResult = amountInPLN / rateTo;
 
     res.json({
         from: from.toUpperCase(),
-        to: "PLN",
-        amount: amount,
-        rate: rate,
-        resultInPLN: parseFloat(result)
+        to: to.toUpperCase(),
+        originalAmount: amount,
+        rateUsed: (rateFrom / rateTo).toFixed(4),
+        result: parseFloat(finalResult.toFixed(2))
     });
 });
 
