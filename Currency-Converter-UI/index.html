@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konwerter Walut PRO</title>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+    <div class="converter-box">
+        <h2>Przelicznik Walut</h2>
+        <form id="converter-form">
+            <div class="input-group">
+                <label for="amount">Kwota:</label>
+                <input type="number" id="amount" step="0.01" min="0.01" required placeholder="np. 100">
+            </div>
+            
+            <div class="input-group">
+                <label for="from">Z waluty (From):</label>
+                <select id="from">
+                    <option value="PLN">Polski Złoty (PLN)</option>
+                    <option value="USD" selected>Dolar amerykański (USD)</option>
+                    <option value="EUR">Euro (EUR)</option>
+                    <option value="GBP">Funt brytyjski (GBP)</option>
+                    <option value="CHF">Frank szwajcarski (CHF)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="to">Na walutę (To):</label>
+                <select id="to">
+                    <option value="PLN" selected>Polski Złoty (PLN)</option>
+                    <option value="USD">Dolar amerykański (USD)</option>
+                    <option value="EUR">Euro (EUR)</option>
+                    <option value="GBP">Funt brytyjski (GBP)</option>
+                    <option value="CHF">Frank szwajcarski (CHF)</option>
+                </select>
+            </div>
+
+            <button type="submit">Przelicz</button>
+        </form>
+
+        <div id="result-box"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
